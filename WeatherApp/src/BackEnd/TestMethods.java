@@ -13,6 +13,17 @@ public class TestMethods {
      public static void main(String[] args) {
          WeatherHistory historyNew = new WeatherHistory();
          historyNew.loadObservationsFromHTMLFile();
+         
+         //String preorder = historyNew.getObservations();
+         //System.out.println("Testing print preorder");
+         //System.out.println(preorder);
+         
+         System.out.println("Testing toString");
+         String preorder = historyNew.toString();
+         System.out.println(preorder);
+         historyNew.toString();
+     
+         
          String output = historyNew.checkWeatherByDate("3/01/2015");
          if (output != "Results by date: ") {
          System.out.println(output);

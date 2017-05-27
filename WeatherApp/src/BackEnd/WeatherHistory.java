@@ -63,7 +63,7 @@ public class WeatherHistory implements Database {
 
     @Override
     public String getObservations() {
-        String observations = history.toString();
+        String observations = history.preorderToString();
         return observations;
     }
 
@@ -74,8 +74,8 @@ public class WeatherHistory implements Database {
 
     @Override
     public String toString() {
-
-        return ("\nWeather History: - \n" + history);
+        history.printTree();
+        return ("\nWeather History: - \n");
     }
 
     @Override
@@ -173,6 +173,7 @@ public class WeatherHistory implements Database {
 
 class BinaryTree {
     private Node root;
+    
   
     
     public BinaryTree() {
@@ -203,5 +204,9 @@ class BinaryTree {
     public void printTree() {
         root.print(root);
     }
-
-}     
+    
+    public String preorderToString() {
+        return root.preorder(root);
+        
+}
+ }     
