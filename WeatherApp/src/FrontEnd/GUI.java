@@ -41,7 +41,7 @@ public class GUI {
 
     Database db = new WeatherHistory();
     JFrame frame = new JFrame();
-    
+
     JLabel labelFrame;
     JLabel labelURL;
     JLabel labelSearchButton;
@@ -52,28 +52,27 @@ public class GUI {
     JLabel labelDisplayPanel;
     DrawingPanel gfxPanel = new DrawingPanel();
 
-
     JButton loadButton;
     JButton displayButton;
     JButton clearButton;
     JButton startStopButton;
-    
+
     JTextField dateField;
 
     JTextArea textArea;
 
     JScrollPane scrollPane;
     Border border;
-    
+
     String dateSearch;
     int x = 100;
     int y = 70;
     Image image;
-    
+
     Timer timer;
     boolean animate;
     boolean right = true;
-    boolean down = true; 
+    boolean down = true;
     boolean dataLoaded = false;
 
     public void BuildGUI() {
@@ -86,7 +85,7 @@ public class GUI {
         loadButton = new JButton("Load Observations");
         displayButton = new JButton("Display Observations");
         clearButton = new JButton("Clear Observations");
-        startStopButton = new JButton ("Start / Stop");
+        startStopButton = new JButton("Start / Stop");
         labelFrame = new JLabel("WeatherApp");
         labelURL = new JLabel("http://rengland.spinetail.cdu.edu.au/observations/");
         dateField = new JTextField("1/01/2015", 10);
@@ -102,8 +101,6 @@ public class GUI {
         labelFrame.setHorizontalAlignment(JLabel.CENTER);
         labelFrame.setVerticalAlignment(JLabel.TOP);
 
-        
-
         // Layout for frame
         //
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -114,24 +111,22 @@ public class GUI {
         frame.add(gfxPanel, BorderLayout.CENTER);
         //frame.add(labelURL, BorderLayout.PAGE_END);
         frame.add(buttonPanel, BorderLayout.PAGE_END);
-        
-        
+
         // layout for gfxPanel
         gfxPanel.setSize(600, 600);
         //frame.getContentPane().setSize(600, 600);
-       // frame.add(gfxPanel);
+        // frame.add(gfxPanel);
         //frame.getContentPane().add(gfxPanel);
-      
-        
+
         // layout for display panel
         displayPanel.setSize(100, 600);
-        
+
         // Label for button panel
         //
         labelButtonPanel.setPreferredSize(new Dimension(15, 15));
         labelButtonPanel.setHorizontalAlignment(JLabel.CENTER);
         labelButtonPanel.setVerticalAlignment(JLabel.TOP);
-        
+
         //scrollPane and textArea
         textArea = new JTextArea(20, 20);
         textArea.setEditable(false);
@@ -140,9 +135,6 @@ public class GUI {
         displayPanel.setLayout(new BoxLayout(displayPanel, BoxLayout.PAGE_AXIS));
         displayPanel.add(labelDisplayPanel, BoxLayout.X_AXIS);
         displayPanel.add(scrollPane);
-        
-       
-        
 
         // Layout for button panel
         //
@@ -155,18 +147,17 @@ public class GUI {
         buttonPanel.add(dateField);
         buttonPanel.add(clearButton);
         //buttonPanel.add(gfxPanel);
-        
+
         buttonPanel.add(startStopButton);
         buttonPanel.setSize(300, 200);
 
-         
         // Align Buttons
         //
         loadButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         displayButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         dateField.setAlignmentX(Component.CENTER_ALIGNMENT);
         clearButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        
+
         startStopButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Event Listeners
@@ -177,145 +168,87 @@ public class GUI {
         dateField.addActionListener(new DateListener());
         startStopButton.addMouseListener(new StartStopListener());
 
-        
-
         // display the frame
         //
         frame.setSize(1000, 700);
         //frame.pack();
         frame.setVisible(true);
-       
-      timer = new Timer (10, new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-        
-            System.out.println(animate);
-        
-            if (!animate) {}
-            else {
-          if (x <= 400 && right) {
-              //System.out.println(x + " " + right);
-          x++;
-          } 
-          if (x >= 400 && right) {
-              right = false;
-          } 
-          if (x >= 0 && right==false) {
-              x--;
-          }
-          if (x <= 0 && right==false) {
-              right = true;
-          }
-          if (y <= 400 && down) {
-              System.out.println(x);
-          y++;
-          } 
-          if (y >= 400 && down) {
-              down = false;
-          } 
-          if (y >= 0 && down==false) {
-              y--;
-          }
-          if (y <= 0 && down==false) {
-              down = true;
-          }
-          gfxPanel.repaint();
-          
-       
-    }
-            
-          }
-      });
-        
-        // testing animation
-    }
-        public void drawAnimation() {
-        
-        boolean right = true;
-        boolean down = true;
-            System.out.println(animate);
-        
-            while (animate) {
-          if (x <= 400 && right) {
-              //System.out.println(x + " " + right);
-          x++;
-          } 
-          if (x >= 400 && right) {
-              right = false;
-          } 
-          if (x >= 0 && right==false) {
-              x--;
-          }
-          if (x <= 0 && right==false) {
-              right = true;
-          }
-          if (y <= 400 && down) {
-              System.out.println(x);
-          y++;
-          } 
-          if (y >= 400 && down) {
-              down = false;
-          } 
-          if (y >= 0 && down==false) {
-              y--;
-          }
-          if (y <= 0 && down==false) {
-              down = true;
-          }
-          gfxPanel.repaint();
-          try {
-             Thread.sleep(10);
-          } catch(Exception ex) {
-              ex.printStackTrace();
-            
-          }
-       
-    }
-        
-          //gfxPanel.repaint();
-}
 
-   
-    public class DrawingPanel extends JPanel{
-        public void paintComponent(Graphics page){
+        timer = new Timer(10, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (!animate) {
+                } else {
+                    if (x <= 400 && right) {
+
+                        x++;
+                    }
+                    if (x >= 400 && right) {
+                        right = false;
+                    }
+                    if (x >= 0 && right == false) {
+                        x--;
+                    }
+                    if (x <= 0 && right == false) {
+                        right = true;
+                    }
+                    if (y <= 400 && down) {
+
+                        y++;
+                    }
+                    if (y >= 400 && down) {
+                        down = false;
+                    }
+                    if (y >= 0 && down == false) {
+                        y--;
+                    }
+                    if (y <= 0 && down == false) {
+                        down = true;
+                    }
+                    gfxPanel.repaint();
+                }
+
+            }
+        });
+
+    }
+
+    public class DrawingPanel extends JPanel {
+
+        public void paintComponent(Graphics page) {
             Graphics2D pencil = (Graphics2D) page;
-           
+
             pencil.setColor(Color.BLUE);
             pencil.fillRect(0, 0, 500, 500);
-            
+
             pencil.setStroke(new BasicStroke(10));
             pencil.setColor(Color.ORANGE);
-            
-          
-            
-                 Ellipse2D.Double circle = new Ellipse2D.Double(x, y, 100, 100);
-                 pencil.fill(circle);
-            
-            
+
+            Ellipse2D.Double circle = new Ellipse2D.Double(x, y, 100, 100);
+            pencil.fill(circle);
+
         }
     }
-     private class StartStopListener implements MouseListener {
+
+    private class StartStopListener implements MouseListener {
 
         public StartStopListener() {
-            
-          
+
         }
 
         @Override
         public void mouseClicked(MouseEvent e) {
-           
-        if (!animate) {
-            animate = true;
-            timer.start();
-        } else {
-            animate = false;
-            timer.stop();
-        }  
-                
-        
+
+            if (!animate) {
+                animate = true;
+                timer.start();
+            } else {
+                animate = false;
+                timer.stop();
             }
-            
-        
+
+        }
 
         @Override
         public void mousePressed(MouseEvent e) {
@@ -333,29 +266,25 @@ public class GUI {
         public void mouseExited(MouseEvent e) {
         }
     }
-     
+
     private class DateListener implements ActionListener {
-        
+
         public DateListener() {
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            
+
             dateSearch = dateField.getText();
-            System.out.println(dateSearch);
+
             if (dataLoaded) {
-            String dateResult = db.checkWeatherByDate(dateSearch);
-           // System.out.println(dateResult);
-           // dateResult = "clear";
-           // System.out.println("dateResult" + dateResult);
-            
-            textArea.setText(dateResult);
+                String dateResult = db.checkWeatherByDate(dateSearch);
+
+                textArea.setText(dateResult);
             } else {
                 textArea.setText("Please load observations first");
             }
-            
-           
+
         }
     }
 
@@ -363,7 +292,7 @@ public class GUI {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            
+
             textArea.setText("Loading.....");
             db = new WeatherHistory();
             db.loadObservationsFromHTMLFile();

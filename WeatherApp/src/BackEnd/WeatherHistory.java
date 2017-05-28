@@ -22,15 +22,11 @@ public class WeatherHistory implements Database {
 
 //    private ArrayList<WeatherObservation> history = new ArrayList<>();
     private BinaryTree history = new BinaryTree();
-    
 
     public WeatherHistory() {
 
     }
 
-    
-      
-   
     @Override
     public void loadObservationsFromHTMLFile() {
         try {
@@ -71,7 +67,6 @@ public class WeatherHistory implements Database {
         history.add(day);
     }
 
-
     @Override
     public String toString() {
         history.printTree();
@@ -83,9 +78,8 @@ public class WeatherHistory implements Database {
         String output = history.searchTree(date);
         return output;
     }
-        
-        
-    }
+
+}
 
   //    public void addDay() {
 //        File myFile = new File("observations.txt");
@@ -121,7 +115,6 @@ public class WeatherHistory implements Database {
 //        }
 //
 //    }
-
 //    public WeatherObservation getDay(int dayIndex) {
 //        return history.get(dayIndex);
 //    }
@@ -130,7 +123,6 @@ public class WeatherHistory implements Database {
 //        history.remove(dayIndex);
 //
 //    }
-
 //    public void writeToFile() {
 //        File myFile = new File("bufferedoutput.txt");
 //        FileReader fileWriter = null;
@@ -167,19 +159,14 @@ public class WeatherHistory implements Database {
 //            }
 //        }
 //    }
-
-     
-
-
 class BinaryTree {
+
     private Node root;
-    
-  
-    
+
     public BinaryTree() {
-    root = null;
+        root = null;
     }
-    
+
     public void add(WeatherObservation value) {
         if (root == null) {
             root = new Node(value);
@@ -187,11 +174,11 @@ class BinaryTree {
             root.insert(root, value);
         }
     }
-    
+
     public void getNodeValues() {
-      System.out.println("first node: " + root.value);
-      System.out.println("second node: " + root.right.value);
-      System.out.println("third node: " + root.left.value);
+        System.out.println("first node: " + root.value);
+        System.out.println("second node: " + root.right.value);
+        System.out.println("third node: " + root.left.value);
     }
 
     public String searchTree(String string) {
@@ -199,14 +186,13 @@ class BinaryTree {
         root.search(root, string);
         return root.searchResults;
     }
-        
-    
+
     public void printTree() {
         root.print(root);
     }
-    
+
     public String preorderToString() {
         return root.preorder(root);
-        
+
+    }
 }
- }     
