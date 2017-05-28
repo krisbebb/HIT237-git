@@ -87,7 +87,6 @@ public class WeatherObservation {
         return this.windSpeed;
     }
 
-    
     @Override
 
     public String toString() {
@@ -99,93 +98,86 @@ public class WeatherObservation {
                 + "\nWind Speed: - " + this.windSpeed) + " km/h\n";
     }
 }
+
 class Node {
-    
+
 //    int data;
     WeatherObservation value;
     Node left;
     Node right;
-    String searchResults = "Results by date: "; 
-    String preorderString = "preorderString ";
-   
-    
-    public Node(){
+    String searchResults = "Results by date: ";
+    String preorderString = " ";
+
+    public Node() {
     }
-    
-    public Node (WeatherObservation name) {
+
+    public Node(WeatherObservation name) {
         this.value = name;
     }
-    
+
     public Node insert(Node node, WeatherObservation value) {
         if (node == null) {
             node = new Node(value);
         } else {
             if (value.getPlace().compareTo(node.value.getPlace()) <= 0) {
-                    node.left = insert(node.left, value);
-                    } else {
-                           node.right = insert(node.right, value);
-                    }
-         }
+                node.left = insert(node.left, value);
+            } else {
+                node.right = insert(node.right, value);
+            }
+        }
         return node;
     }
-    
-public Node search(Node node, String date) {
-        
+
+    public Node search(Node node, String date) {
+
         if (node == null) {
             //System.out.println("Found nothing");
-            
+
             return null;
-        } 
+        }
         if (node.value.getDate().compareTo(date) == 0) {
             Node leftNode = search(node.left, date);
-            
+
             //System.out.println("Found " + node.value.toString());
-            searchResults  += node.value.toString();
-            
+            searchResults += node.value.toString();
+
             //System.out.println("SearchResults = "+ searchResults);
             //System.out.println("Results are: " + result);
-            if (leftNode != null ) {
+            if (leftNode != null) {
                 return leftNode;
             }
-            
+
             return node;
         } else {
             Node leftNode = search(node.left, date);
             Node rightNode = search(node.right, date);
             if (leftNode != null) {
-                return leftNode;                
+                return leftNode;
             } else {
                 return rightNode;
             }
         }
-        }     
-            
-    
+    }
+
     public void print(Node root) {
         if (root != null) {
             print(root.left);
             System.out.println("observation: " + root.value);
             print(root.right);
-            
+
         }
-        
+
     }
+
     public String preorder(Node root) {
-        
-        
-        if(root !=  null) {
 
-      
-      preorder(root.left);
-      preorderString += root.value;
-      preorder(root.right);
+        if (root != null) {
+
+            preorder(root.left);
+            preorderString += root.value;
+            preorder(root.right);
         }
-      return preorderString;
+        return preorderString;
     }
-    
-    
-    
+
 }
-
-  
-

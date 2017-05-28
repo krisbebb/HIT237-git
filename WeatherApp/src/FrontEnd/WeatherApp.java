@@ -10,7 +10,6 @@ public class WeatherApp {
 
         GUI weatherApp = new GUI();
         weatherApp.BuildGUI();
-  
 
     }
 

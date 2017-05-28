@@ -6,6 +6,7 @@ public interface Database {
 
 // http://rengland.spinetail.cdu.edu.au/observations/
     public String getObservations();
-   public String checkWeatherByDate(String date);
+
+    public String checkWeatherByDate(String date);
 
 }
