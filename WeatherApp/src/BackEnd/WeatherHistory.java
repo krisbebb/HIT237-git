@@ -195,7 +195,7 @@ class BinaryTree {
     }
 
     public String searchTree(String string) {
-        
+        root.searchResults = "";
         root.search(root, string);
         return root.searchResults;
     }

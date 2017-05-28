@@ -15,13 +15,15 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-//import javax.swing.JTextField;
+import javax.swing.JTextField;
 import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  *
@@ -42,11 +44,16 @@ public class GUI {
     JButton loadButton;
     JButton displayButton;
     JButton clearButton;
+    
+    JTextField dateField;
 
     JTextArea textArea;
 
     JScrollPane scrollPane;
     Border border;
+    
+    String dateSearch;
+    
 
     public void BuildGUI() {
 
@@ -59,6 +66,7 @@ public class GUI {
         clearButton = new JButton("Clear Observations");
         labelFrame = new JLabel("WeatherApp");
         labelURL = new JLabel("http://rengland.spinetail.cdu.edu.au/observations/");
+        dateField = new JTextField("1/01/2015", 10);
 
         // border
         //
@@ -93,18 +101,21 @@ public class GUI {
         buttonPanel.add(loadButton);
         buttonPanel.add(displayButton);
         buttonPanel.add(clearButton);
+        buttonPanel.add(dateField);
 
         // Align Buttons
         //
         loadButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         displayButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         clearButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        dateField.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Event Listeners
         //
         loadButton.addMouseListener(new LoadListener());
         displayButton.addMouseListener(new DisplayListener());
         clearButton.addMouseListener(new ClearListener());
+        dateField.addActionListener(new DateListener());
 
         //scrollPane and textArea
         textArea = new JTextArea(20, 20);
@@ -119,6 +130,28 @@ public class GUI {
         //
         frame.pack();
         frame.setVisible(true);
+    }
+
+    private class DateListener implements ActionListener {
+        
+        public DateListener() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            
+            dateSearch = dateField.getText();
+            System.out.println(dateSearch);
+            
+            String dateResult = db.checkWeatherByDate(dateSearch);
+           // System.out.println(dateResult);
+           // dateResult = "clear";
+           // System.out.println("dateResult" + dateResult);
+            
+            textArea.setText(dateResult);
+            
+           
+        }
     }
 
     private class LoadListener implements MouseListener {

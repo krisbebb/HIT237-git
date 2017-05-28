@@ -24,7 +24,7 @@ public class TestMethods {
          historyNew.toString();
      
          
-         String output = historyNew.checkWeatherByDate("3/01/2015");
+         String output = historyNew.checkWeatherByDate("1/01/2015");
          if (output != "Results by date: ") {
          System.out.println(output);
          

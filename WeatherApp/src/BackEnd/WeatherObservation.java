@@ -136,7 +136,7 @@ public Node search(Node node, String date) {
             
             return null;
         } 
-        if (node.value.getPlace().compareTo(date) == 0) {
+        if (node.value.getDate().compareTo(date) == 0) {
             Node leftNode = search(node.left, date);
             
             //System.out.println("Found " + node.value.toString());
