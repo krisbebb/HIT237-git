@@ -27,6 +27,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.geom.Ellipse2D;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -45,7 +48,7 @@ public class GUI {
     JPanel displayPanel = new JPanel();
     JLabel labelDisplayPanel;
     DrawingPanel gfxPanel = new DrawingPanel();
-    JPanel gfxPanelHolder = new JPanel();
+
 
     JButton loadButton;
     JButton displayButton;
@@ -59,7 +62,9 @@ public class GUI {
     Border border;
     
     String dateSearch;
-    
+    int x = 100;
+    int y = 70;
+    Image image;
 
     public void BuildGUI() {
 
@@ -158,27 +163,73 @@ public class GUI {
         frame.setSize(900, 900);
         //frame.pack();
         frame.setVisible(true);
-        
-        
-       
-        
-       
+        this.drawAnimation();
+        // testing animation
     }
+        public void drawAnimation() {
+        
+        boolean right = true;
+        boolean down = true;
+        boolean animate = true;
+        
+            while (animate) {
+          if (x <= 400 && right) {
+              //System.out.println(x + " " + right);
+          x++;
+          } 
+          if (x >= 400 && right) {
+              right = false;
+          } 
+          if (x >= 0 && right==false) {
+              x--;
+          }
+          if (x <= 0 && right==false) {
+              right = true;
+          }
+          if (y <= 400 && down) {
+              System.out.println(x);
+          y++;
+          } 
+          if (y >= 400 && down) {
+              down = false;
+          } 
+          if (y >= 0 && down==false) {
+              y--;
+          }
+          if (y <= 0 && down==false) {
+              down = true;
+          }
+          gfxPanel.repaint();
+          try {
+              Thread.sleep(10);
+          } catch(Exception ex) {
+              ex.printStackTrace();
+            
+          }
+       
+            }
+        
+    
+}
     public class DrawingPanel extends JPanel{
         public void paintComponent(Graphics page){
             Graphics2D pencil = (Graphics2D) page;
-            pencil.setColor(Color.white);
+           
+            pencil.setColor(Color.BLUE);
             pencil.fillRect(0, 0, 500, 500);
             
             pencil.setStroke(new BasicStroke(10));
-            pencil.setColor(Color.GREEN);
+            pencil.setColor(Color.ORANGE);
             
-            pencil.drawOval(50, 70, 200, 235);
-            pencil.setColor(Color.GREEN);
-            pencil.drawLine(100, 100, 200, 275);
+            //pencil.drawOval(x, y, 200, 235);
+            //pencil.setColor(Color.GREEN);
+           // pencil.drawLine(100, 100, 200, 275);
+            
+                 Ellipse2D.Double circle = new Ellipse2D.Double(x, y, 100, 100);
+                 pencil.fill(circle);
+            
             
         }
-    
     }
     private class DateListener implements ActionListener {
         
