@@ -23,6 +23,7 @@ import javax.swing.border.Border;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Graphics;
@@ -43,6 +44,7 @@ public class GUI {
     
     JLabel labelFrame;
     JLabel labelURL;
+    JLabel labelSearchButton;
 
     JPanel buttonPanel = new JPanel();
     JLabel labelButtonPanel;
@@ -72,6 +74,7 @@ public class GUI {
     boolean animate;
     boolean right = true;
     boolean down = true; 
+    boolean dataLoaded = false;
 
     public void BuildGUI() {
 
@@ -79,6 +82,7 @@ public class GUI {
         //
         labelButtonPanel = new JLabel("Controls");
         labelDisplayPanel = new JLabel("Display Area");
+        labelSearchButton = new JLabel("Enter date to search: ");
         loadButton = new JButton("Load Observations");
         displayButton = new JButton("Display Observations");
         clearButton = new JButton("Clear Observations");
@@ -105,10 +109,11 @@ public class GUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
         frame.add(labelFrame, BorderLayout.PAGE_START);
-        frame.add(buttonPanel, BorderLayout.LINE_START);
-        frame.add(displayPanel, BorderLayout.LINE_END);
+        //frame.add(buttonPanel, BorderLayout.LINE_START);
+        frame.add(displayPanel, BorderLayout.LINE_START);
         frame.add(gfxPanel, BorderLayout.CENTER);
-        frame.add(labelURL, BorderLayout.PAGE_END);
+        //frame.add(labelURL, BorderLayout.PAGE_END);
+        frame.add(buttonPanel, BorderLayout.PAGE_END);
         
         
         // layout for gfxPanel
@@ -119,7 +124,7 @@ public class GUI {
       
         
         // layout for display panel
-        displayPanel.setSize(100, 100);
+        displayPanel.setSize(100, 600);
         
         // Label for button panel
         //
@@ -135,18 +140,22 @@ public class GUI {
         displayPanel.setLayout(new BoxLayout(displayPanel, BoxLayout.PAGE_AXIS));
         displayPanel.add(labelDisplayPanel, BoxLayout.X_AXIS);
         displayPanel.add(scrollPane);
+        
        
         
 
         // Layout for button panel
         //
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.PAGE_AXIS));
+        buttonPanel.setLayout(new FlowLayout());
         buttonPanel.setBorder(border);
         buttonPanel.add(labelButtonPanel);
         buttonPanel.add(loadButton);
         buttonPanel.add(displayButton);
-        buttonPanel.add(clearButton);
+        buttonPanel.add(labelSearchButton);
         buttonPanel.add(dateField);
+        buttonPanel.add(clearButton);
+        //buttonPanel.add(gfxPanel);
+        
         buttonPanel.add(startStopButton);
         buttonPanel.setSize(300, 200);
 
@@ -155,8 +164,9 @@ public class GUI {
         //
         loadButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         displayButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        clearButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         dateField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        clearButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
         startStopButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Event Listeners
@@ -171,7 +181,7 @@ public class GUI {
 
         // display the frame
         //
-        frame.setSize(900, 900);
+        frame.setSize(1000, 700);
         //frame.pack();
         frame.setVisible(true);
        
@@ -334,13 +344,16 @@ public class GUI {
             
             dateSearch = dateField.getText();
             System.out.println(dateSearch);
-            
+            if (dataLoaded) {
             String dateResult = db.checkWeatherByDate(dateSearch);
            // System.out.println(dateResult);
            // dateResult = "clear";
            // System.out.println("dateResult" + dateResult);
             
             textArea.setText(dateResult);
+            } else {
+                textArea.setText("Please load observations first");
+            }
             
            
         }
@@ -350,10 +363,12 @@ public class GUI {
 
         @Override
         public void mouseClicked(MouseEvent e) {
+            
             textArea.setText("Loading.....");
             db = new WeatherHistory();
             db.loadObservationsFromHTMLFile();
             textArea.append("Done");
+            dataLoaded = true;
 
         }
 
@@ -413,6 +428,7 @@ public class GUI {
         public void mouseClicked(MouseEvent e) {
             textArea.setText(null);
             db = new WeatherHistory();
+            dataLoaded = false;
         }
 
         @Override

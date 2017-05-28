@@ -106,7 +106,7 @@ class Node {
     Node left;
     Node right;
     String searchResults = "Results by date: "; 
-    String preorderString = "preorderString ";
+    String preorderString = " ";
    
     
     public Node(){
