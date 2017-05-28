@@ -6,6 +6,7 @@
 package FrontEnd;
 
 import BackEnd.*;
+import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.event.MouseEvent;
 import javax.swing.BoxLayout;
@@ -24,6 +25,8 @@ import java.awt.Dimension;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 /**
  *
@@ -33,6 +36,7 @@ public class GUI {
 
     Database db = new WeatherHistory();
     JFrame frame = new JFrame();
+    
     JLabel labelFrame;
     JLabel labelURL;
 
@@ -40,6 +44,8 @@ public class GUI {
     JLabel labelButtonPanel;
     JPanel displayPanel = new JPanel();
     JLabel labelDisplayPanel;
+    DrawingPanel gfxPanel = new DrawingPanel();
+    JPanel gfxPanelHolder = new JPanel();
 
     JButton loadButton;
     JButton displayButton;
@@ -79,19 +85,45 @@ public class GUI {
         labelFrame.setHorizontalAlignment(JLabel.CENTER);
         labelFrame.setVerticalAlignment(JLabel.TOP);
 
+        
+
+        // Layout for frame
+        //
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
+        frame.add(labelFrame, BorderLayout.PAGE_START);
+        frame.add(buttonPanel, BorderLayout.LINE_START);
+        frame.add(displayPanel, BorderLayout.LINE_END);
+        frame.add(gfxPanel, BorderLayout.CENTER);
+        frame.add(labelURL, BorderLayout.PAGE_END);
+        
+        
+        // layout for gfxPanel
+        gfxPanel.setSize(600, 600);
+        //frame.getContentPane().setSize(600, 600);
+       // frame.add(gfxPanel);
+        //frame.getContentPane().add(gfxPanel);
+      
+        
+        // layout for display panel
+        displayPanel.setSize(100, 100);
+        
         // Label for button panel
         //
         labelButtonPanel.setPreferredSize(new Dimension(15, 15));
         labelButtonPanel.setHorizontalAlignment(JLabel.CENTER);
         labelButtonPanel.setVerticalAlignment(JLabel.TOP);
-
-        // Layout for frame
-        //
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(labelFrame, BorderLayout.PAGE_START);
-        frame.add(buttonPanel, BorderLayout.LINE_START);
-        frame.add(displayPanel, BorderLayout.CENTER);
-        frame.add(labelURL, BorderLayout.PAGE_END);
+        
+        //scrollPane and textArea
+        textArea = new JTextArea(20, 20);
+        textArea.setEditable(false);
+        scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        displayPanel.setLayout(new BoxLayout(displayPanel, BoxLayout.PAGE_AXIS));
+        displayPanel.add(labelDisplayPanel, BoxLayout.X_AXIS);
+        displayPanel.add(scrollPane);
+       
+        
 
         // Layout for button panel
         //
@@ -102,7 +134,9 @@ public class GUI {
         buttonPanel.add(displayButton);
         buttonPanel.add(clearButton);
         buttonPanel.add(dateField);
+        buttonPanel.setSize(300, 200);
 
+         
         // Align Buttons
         //
         loadButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -117,21 +151,35 @@ public class GUI {
         clearButton.addMouseListener(new ClearListener());
         dateField.addActionListener(new DateListener());
 
-        //scrollPane and textArea
-        textArea = new JTextArea(20, 20);
-        textArea.setEditable(false);
-        scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        displayPanel.setLayout(new BoxLayout(displayPanel, BoxLayout.PAGE_AXIS));
-        displayPanel.add(labelDisplayPanel);
-        displayPanel.add(scrollPane);
+        
 
         // display the frame
         //
-        frame.pack();
+        frame.setSize(900, 900);
+        //frame.pack();
         frame.setVisible(true);
+        
+        
+       
+        
+       
     }
-
+    public class DrawingPanel extends JPanel{
+        public void paintComponent(Graphics page){
+            Graphics2D pencil = (Graphics2D) page;
+            pencil.setColor(Color.white);
+            pencil.fillRect(0, 0, 500, 500);
+            
+            pencil.setStroke(new BasicStroke(10));
+            pencil.setColor(Color.GREEN);
+            
+            pencil.drawOval(50, 70, 200, 235);
+            pencil.setColor(Color.GREEN);
+            pencil.drawLine(100, 100, 200, 275);
+            
+        }
+    
+    }
     private class DateListener implements ActionListener {
         
         public DateListener() {
