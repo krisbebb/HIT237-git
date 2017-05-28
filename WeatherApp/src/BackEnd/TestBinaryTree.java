@@ -22,6 +22,7 @@ public class TestBinaryTree {
 //         mt.add("Laura");
          testHistory.loadObservationsFromHTMLFile();
 //         System.out.println(testHistory.getObservations());
+       
         
          System.out.println(testHistory.checkWeatherByDate("1/01/2015"));
          

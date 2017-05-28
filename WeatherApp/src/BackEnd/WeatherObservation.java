@@ -106,6 +106,8 @@ class Node {
     Node left;
     Node right;
     String searchResults = "Results by date: "; 
+    String preorderString = "preorderString ";
+   
     
     public Node(){
     }
@@ -118,7 +120,7 @@ class Node {
         if (node == null) {
             node = new Node(value);
         } else {
-            if (value.getDate().compareTo(node.value.getDate()) <= 0) {
+            if (value.getPlace().compareTo(node.value.getPlace()) <= 0) {
                     node.left = insert(node.left, value);
                     } else {
                            node.right = insert(node.right, value);
@@ -168,4 +170,22 @@ public Node search(Node node, String date) {
         }
         
     }
+    public String preorder(Node root) {
+        
+        
+        if(root !=  null) {
+
+      
+      preorder(root.left);
+      preorderString += root.value;
+      preorder(root.right);
+        }
+      return preorderString;
+    }
+    
+    
+    
 }
+
+  
+
